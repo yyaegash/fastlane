@@ -89,25 +89,20 @@ module Fastlane
         [
           FastlaneCore::ConfigItem.new(key: :api_token,
                                        env_name: "FL_APPALOOSA_API_TOKEN", # The name of the environment variable
-                                       description: "Your API Token", # a short description of this parameter
+                                       description: "Your API Token, if you don\'t have an account hit [enter]", # a short description of this parameter
                                        verify_block: proc do |value|
                                           # raise "No API token for AppaloosaAction given, pass using `api_token: 'token'`".red unless (value and not value.empty?)
-                                          # raise "Couldn't find file at path '#{value}'".red unless File.exist?(value)
                                        end),
           FastlaneCore::ConfigItem.new(key: :store_id,
                                        env_name: "FL_APPALOOSA_STORE_ID", # The name of the environment variable
-                                       description: "Your Store id", # a short description of this parameter
+                                       description: "Your Store id, if you don\'t have an account hit [enter]", # a short description of this parameter
                                        verify_block: proc do |value|
                                           # raise "No Store id token for AppaloosaAction given, pass using `store_id: 'token'`".red unless (value and not value.empty?)
-                                          # raise "Couldn't find file at path '#{value}'".red unless File.exist?(value)
                                        end),
           FastlaneCore::ConfigItem.new(key: :email,
                                      env_name: "FL_APPALOOSA_EMAIL", # The name of the environment variable
-                                     description: "Email, only if it's your first time", # a short description of this parameter
-                                     verify_block: proc do |value|
-                                        # raise "No Email for AppaloosaAction given, pass using `email: 'token'`".red unless (value and not value.empty?)
-                                        # raise "Couldn't find file at path '#{value}'".red unless File.exist?(value)
-                                     end),
+                                     description: "It's your first time? Give your email address", # a short description of this parameter
+                                     optional: true),
           FastlaneCore::ConfigItem.new(key: :binary,
                                      env_name: "FL_APPALOOSA_BINARY", # The name of the environment variable
                                      description: "Path to your IPA file. Optional if you use the `ipa` or `xcodebuild` action. For Mac zip the .app",
@@ -119,7 +114,8 @@ module Fastlane
                                        env_name: "FL_APPALOOSA_DEVELOPMENT",
                                        description: "Create a development certificate instead of a distribution one",
                                        is_string: false, # true: verifies the input is a string, false: every kind of value
-                                       default_value: false) # the default value if the user didn't provide one
+                                       default_value: false,
+                                       optional: true) # the default value if the user didn't provide one
         ]
       end
 
