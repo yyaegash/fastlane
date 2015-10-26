@@ -73,7 +73,6 @@ module Fastlane
 
       def self.upload_on_appaloosa api_key, store_id, binary_path, screenshots, group_ids
         screenshots = set_all_screenshots_links screenshots
-        binding.pry
         response = HTTP.post("#{APPALOOSA_SERVER}/#{store_id}/applications/upload",
           json: { store_id: store_id , 
                   api_key: api_key, 
@@ -166,10 +165,10 @@ module Fastlane
         [
           FastlaneCore::ConfigItem.new(key: :binary,
                                      env_name: "FL_APPALOOSA_BINARY", # The name of the environment variable
-                                     description: "Path to your IPA file. Optional if you use the `ipa` or `xcodebuild` action. For Mac zip the .app",
+                                     description: "Path to your IPA or APK file. Optional for ipa if you use the `ipa` or `xcodebuild` action. For Mac zip the .app",
                                        default_value: Actions.lane_context[SharedValues::IPA_OUTPUT_PATH],
                                        verify_block: proc do |value|
-                                         raise "Couldn't find ipa file at path '#{value}'".red unless File.exist?(value)
+                                         raise "Couldn't find ipa || apk file at path '#{value}'".red unless File.exist?(value)
                                        end),
           FastlaneCore::ConfigItem.new(key: :api_token,
                                        env_name: "FL_APPALOOSA_API_TOKEN", # The name of the environment variable
